@@ -1,5 +1,5 @@
+// DONE.
 const { Schema, model } = require("mongoose");
-const assignmentSchema = require("./Assignment");
 
 // Schema to create Student model
 const userSchema = new Schema(
@@ -35,6 +35,11 @@ const userSchema = new Schema(
     },
   }
 );
+
+// Create a virtual property
+userSchema.virtual("friendCount").get(function () {
+  return this.friends.length;
+});
 
 const User = model("User", userSchema);
 
