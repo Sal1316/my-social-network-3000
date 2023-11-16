@@ -1,7 +1,7 @@
 // DONE.
 const { Schema, model } = require("mongoose");
 
-// subschema `reaction`
+// subschema `Reaction`
 const reactionSchema = new Schema({
   reactionId: {
     type: Schema.Types.ObjectId,
@@ -24,7 +24,7 @@ const reactionSchema = new Schema({
 });
 
 // Schema to create Thought model
-const thoughSchema = new Schema(
+const thoughtSchema = new Schema(
   {
     thoughtText: {
       type: String,
@@ -50,10 +50,10 @@ const thoughSchema = new Schema(
 );
 
 // Create a virtual property
-thoughSchema.virtual("reactionCount").get(function () {
+thoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
 });
 
-const Thought = model("Thought", thoughSchema);
+const Thought = model("Thought", thoughtSchema);
 
 module.exports = Thought;
