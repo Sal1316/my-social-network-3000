@@ -8,21 +8,27 @@ const {
 
   // linked ones
   addReaction,
-  // deleteReaction,
+  deleteReaction,
 } = require("../../controllers/thoughtController");
 
 // /api/thoughts
-router.route("/").get(getAllthoughts);
+router.route("/").get(getAllthoughts).post(createThought);
 //
-router.route("/:thoughtId").put(updateThought);
-router.route("/:thoughtId").get(getSingleThought);
+router
+  .route("/:thoughtId")
+  .get(getSingleThought)
+  .put(updateThought)
+  .delete(deleteThought);
 
-router.route("/").post(createThought);
+// router.route("/").post(createThought);
 
-// router.route("/:thoughts/:thoughtId/reactions").delete(deleteReaction);
+// router.route("/:thoughtId").put(updateThought);
 
-router.route("/:thoughtId").delete(deleteThought);
+// router.route("/:thoughtId").delete(deleteThought);
 
+//Reactions:
 router.route("/:thoughtId/reactions").post(addReaction);
+
+router.route("/:thoughtId/reactions/:reactionId").delete(deleteReaction);
 
 module.exports = router;

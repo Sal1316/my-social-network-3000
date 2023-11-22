@@ -1,10 +1,10 @@
-const { User } = require("../models"); // bc it accesses the index file first.
+const { User, Thought } = require("../models"); // bc it accesses the index file first.
 
 module.exports = {
   // Get all USERS
   async getAllUsers(req, res) {
     try {
-      const users = await User.find();
+      const users = await User.find().populate("friends").populate("thoughts");
       res.json(users);
     } catch (err) {
       console.log("error from UserControls:", err);
@@ -15,7 +15,9 @@ module.exports = {
   // Get 1 USER
   async getSingleUser(req, res) {
     try {
-      const user = await User.findOne({ _id: req.params.userId });
+      const user = await User.findOne({ _id: req.params.userId })
+        .populate("friends")
+        .populate("thoughts");
 
       if (!user) {
         return res.status(404).json({ message: "No user with that ID" });
@@ -67,7 +69,7 @@ module.exports = {
       const user = await User.findOneAndDelete({
         _id: req.params.userId,
       });
-
+      await Thought.deleteMany({ _id: { $in: user.thoughts } });
       if (!user) {
         return res.status(404).json({ message: "No User with that ID" });
       }

@@ -42,7 +42,7 @@ connection.once('open', async () => {
 
   // Add courses to the collection and await the results
   await Course.collection.insertOne({
-    courseName: 'UCLA',
+    courseName: 'Calculus*3',
     inPerson: false,
     students: [...students],
   });
